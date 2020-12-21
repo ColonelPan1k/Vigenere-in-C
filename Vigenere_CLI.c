@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <sys/stat.h>
 
 int
 wrapMod(int a, int b)
@@ -23,7 +23,6 @@ wrapMod(int a, int b)
                 return (a % b + b) % b;
         }
 }
-
  
 static inline char
 caesarEncode(char message, int shift)
@@ -68,43 +67,70 @@ decode(char* message, char* key)
 
 
 char*
-format(char* fileBuffer)
+format(char* fileName)
 {
+        FILE *fp;
+        fp = fopen(fileName, "r");
 
+        if(fp == NULL){
+                printf("Error: Could not open file\n");
+                return 0;
+        }
 
+        fseek(fp, 0, SEEK_END);
+        long int buffSize = ftell(fp);
+        fseek(fp, 0, SEEK_SET);
+
+        char* buffer = calloc(buffSize + 1, sizeof(char));
+
+        if (buffer == NULL){
+                printf("Error: Could not allocate buffer memory\n");
+                return 0;
+        }
+        
+        fread(buffer, sizeof(char), buffSize, fp);
+
+        char* formatBuffer = calloc(buffSize + 1, sizeof(char));
+        int fBufCounter = 0;
+
+        /* This is exactly the place where I would need find(char, char*) to search for
+         * a char in a string but looping through a string of n length for each char in 
+         * a file buffer doesn't seem like the best idea for efficiency.
+         */
+      
+        for (int i = 0; i < strlen(buffer); ++i){
+                if (buffer[i] != ' '){
+                        formatBuffer[fBufCounter] = buffer[i];
+                        ++fBufCounter;
+                }
+        }
+
+        free(buffer);
+        fclose(fp);
+        
+        return formatBuffer;
 }
 
 int
 processFile(char* fileName, char* option, char* key)
 {
-        /* 1. Open fileName
-         * 2. Read the contents into a buffer
-         *    - Format the buffer to remove all non-lowercase characters if 
-         *      it's being encoded
-         * 4. Encode/decode the buffer
-         * 5. Write the buffer to a new file called <fileName>_[encode, decode].txt
-         * 6. Return 1 if everything worked or 0 if something broke.
-         *
-         * It might be easier to just use a single character buffer
-         */
-
-        FILE *fp;
-        fp = fopen(fileName, "r");
-
-        if (fp == NULL){
-                printf("ERROR: File not found\n");
+        FILE *newFile;
+        newFile = fopen("Newtest.txt", "w");
+        if (newFile == NULL){
+                printf("Error: Could not open file\n");
                 return -1;
         }
+        char* formatBuffer = format(fileName);
 
-        char buffer[1024];
-
-        fgets(buffer, sizeof(buffer), fp);
-
+        if (strcmp("encode", option) == 0){
+                fputs(encode(formatBuffer, key), newFile);
+        } else if (strcmp("decode", option) == 0) {
+                fputs(decode(formatBuffer, key), newFile);
+        }
         
+        free(formatBuffer);
+        fclose(newFile);
         
-
-
-        fclose(fp);
         return 0;
 }
 
