@@ -96,6 +96,7 @@ processFile(char* fileName, char* option, char* key)
                 printf("%c", c);
         }
         // does this new email work for commits?
+        // verified now?
         fclose(fp);
         retrun 0;
 }
