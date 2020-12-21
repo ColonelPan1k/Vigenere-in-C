@@ -1,5 +1,5 @@
 /* Vigenere Cipher CLI Tool
- * Signed yet?
+ * 
  * zhaba.dev
  *  
  */
