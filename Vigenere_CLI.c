@@ -115,7 +115,7 @@ int
 processFile(char* fileName, char* option, char* key)
 {
         FILE *newFile;
-        newFile = fopen("Newtest.txt", "w");
+        newFile = fopen(strcat(option, fileName), "w");
         if (newFile == NULL){
                 printf("Error: Could not open file\n");
                 return -1;
