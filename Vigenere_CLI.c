@@ -69,6 +69,38 @@ format(char* fileBuffer)
 }
 
 int
+processFile(char* fileName, char* option, char* key)
+{
+        /* 1. Open fileName
+         * 2. Read the contents into a buffer
+         *    - Format the buffer to remove all non-lowercase characters if 
+         *      it's being encoded
+         * 4. Encode/decode the buffer
+         * 5. Write the buffer to a new file called <fileName>_[encode, decode].txt
+         * 6. Return 1 if everything worked or 0 if something broke.
+         *
+         * It might be easier to just use a single character buffer
+         */
+
+        FILE *fp;
+        fp = fopen(fileName, "r");
+
+        char charBuffer;
+
+        while(1){
+                charBuffer = fgetc(fp);
+                if (feof(fp)){
+                        break;
+                }
+
+                printf("%c", c);
+        }
+        // does this new email work for commits?
+        fclose(fp);
+        retrun 0;
+}
+
+int
 main(int argc, char** argv){
         
         if (strcmp("encode", argv[1]) == 0){
