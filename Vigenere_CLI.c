@@ -1,16 +1,13 @@
-/*
- * Format: 0- vignere 1-[encode, decode] 2-[message] 3-[key]
+/* Vigenere Cipher CLI Tool
+ * 
+ * zhaba.dev
+ *  
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-//char* formatInput(char* message);
-//inline char* test(char* message, int shift);
-//inline char* caesarDecode (char* message, int shift);
-//char* encode(char* message, char* key);
-//char* decode(char* message, char* key);
 
 int
 wrapMod(int a, int b)
@@ -63,6 +60,47 @@ decode(char* message, char* key)
         return message;
 }
 
+
+char*
+format(char* fileBuffer)
+{
+        // Format incoming file buffer to remove all spaces and add newline char after every 80 characters
+        return fileBuffer;
+}
+
+void
+processFile(char* fileName, char* option, char* key)
+{
+
+        /* 1. Open fileName
+         * 2. Read the contents into some buffer
+         * 3. Format the buffer to remove all tabs, spaces, 
+         *    uppercase characters, punctuation, etc
+         * 4. Encode/Decode the buffer
+         * 5. Write the buffer to a new file called <fileName>_[encode, decode].txt
+         * 6. Return true if everything worked, false if something broke
+         */
+        
+        FILE *fp;
+
+        fseek(fp, 0, SEEK_END);
+        int bufferSize = ftell(fp);
+        fseek(fp, 0, SEEK_SET);
+
+        void* buffer = malloc(bufferSize);
+        char* ch = buffer;
+
+        
+        
+        
+
+        
+        
+
+        
+        fclose(fp);
+}
+
 int
 main(int argc, char** argv){
         
@@ -72,6 +110,10 @@ main(int argc, char** argv){
         }
         else if (strcmp("decode", argv[1]) == 0){
                 printf("Decoded: %s\n", decode(argv[2], argv[3]));
+        }
+        // 0 Vigenere 1 -f 2 test.txt 3 decode 4 "nut"
+        else if (strcmp("-f", argv[1] == 0)){
+                processFile(argv[2], argv[3], argv[4])
         }
 
         return 0;
