@@ -5,6 +5,14 @@ I thought it would be a fun little thing to remake it as a little command line p
 but it could be one of those funny little programs you have lying around your terminal in case you want to encode/decode something
 on the fly. 
 
+## How to use
+
+Compile it with gcc, there's no dependencies or really anything fancy about this.  
+
+The commands are simple too, the argument structure is just: Vigenere [encode, decode] [message] [key]
+
+File options are coming soon
+
 # The Original vs. This Rework
 
 The main difference is that the program is just overall much better.  The code is much more organized and (I would hope) much better thought out.  
