@@ -1,8 +1,13 @@
 /* Vigenere Cipher CLI Tool
- * Screaming
+ * 
  * zhaba.dev
  *  
  */
+
+// TODO: Add format function to remove spaces
+//       Format all encode/decode input so full sentences can be used
+//       Finish file I/O portion
+//       See if formatting can extend to punctuation, uppercase, etc
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,6 +24,7 @@ wrapMod(int a, int b)
         }
 }
 
+ 
 static inline char
 caesarEncode(char message, int shift)
 {
@@ -64,8 +70,8 @@ decode(char* message, char* key)
 char*
 format(char* fileBuffer)
 {
-        // Format incoming file buffer to remove all spaces and add newline char after every 80 characters
-        return fileBuffer;
+
+
 }
 
 int
@@ -85,19 +91,21 @@ processFile(char* fileName, char* option, char* key)
         FILE *fp;
         fp = fopen(fileName, "r");
 
-        char charBuffer;
-
-        while(1){
-                charBuffer = fgetc(fp);
-                if (feof(fp)){
-                        break;
-                }
-
-                printf("%c", c);
+        if (fp == NULL){
+                printf("ERROR: File not found\n");
+                return -1;
         }
-        // how about now?
+
+        char buffer[1024];
+
+        fgets(buffer, sizeof(buffer), fp);
+
+        
+        
+
+
         fclose(fp);
-        retrun 0;
+        return 0;
 }
 
 int
@@ -110,7 +118,11 @@ main(int argc, char** argv){
         else if (strcmp("decode", argv[1]) == 0){
                 printf("Decoded: %s\n", decode(argv[2], argv[3]));
         }
-
+        //0 Vigenere 1 -f 2 test.txt 3 encode 4 key
+        else if ( strcmp("-f", argv[1]) == 0){
+                processFile(argv[2], argv[3], argv[4]);
+                
+        }
         return 0;
 }
 
