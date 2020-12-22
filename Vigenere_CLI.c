@@ -89,11 +89,9 @@ format(char* fileName)
         char* formatBuffer = calloc(buffSize + 1, sizeof(char));
         int fBufCounter = 0;
 
-        printf("Here\n");
         
         for (int i = 0; i < strlen(buffer); ++i){
             if (buffer[i] >= 'a' && buffer[i] <= 'z'){
-                    printf("%c\n", buffer[i]);
                     formatBuffer[fBufCounter] = buffer[i];
                     ++fBufCounter;
                     }
@@ -109,12 +107,9 @@ format(char* fileName)
 int
 processFile(char* fileName, char* option, char* key)
 {
-        printf("Processing file\n");
-        printf("%s\n", fileName);
-        printf("Option: %s\n", option);
         
         FILE *newFile;
-        newFile = fopen("testfile.txt", "w");
+        newFile = fopen("Vigenere_Output.txt", "w");
         
         if (newFile == NULL){
                 printf("Error: Could not open file\n");
@@ -123,8 +118,6 @@ processFile(char* fileName, char* option, char* key)
                 printf("File created successfully\n");
         }
         char* formatBuffer = format(fileName);
-        printf("%i\n", strcmp("encode", option));
-
         
         if (strcmp("encode", option) == 0){
                 printf("Encoding\n");
