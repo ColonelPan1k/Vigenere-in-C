@@ -4,15 +4,9 @@
  *  
  */
 
-// TODO: Add format function to remove spaces
-//       Format all encode/decode input so full sentences can be used
-//       Finish file I/O portion
-//       See if formatting can extend to punctuation, uppercase, etc
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/stat.h>
 
 int
 wrapMod(int a, int b)
@@ -23,7 +17,7 @@ wrapMod(int a, int b)
                 return (a % b + b) % b;
         }
 }
- 
+
 static inline char
 caesarEncode(char message, int shift)
 {
@@ -89,21 +83,22 @@ format(char* fileName)
         }
         
         fread(buffer, sizeof(char), buffSize, fp);
+        
 
+        
         char* formatBuffer = calloc(buffSize + 1, sizeof(char));
         int fBufCounter = 0;
 
-        /* This is exactly the place where I would need find(char, char*) to search for
-         * a char in a string but looping through a string of n length for each char in 
-         * a file buffer doesn't seem like the best idea for efficiency.
-         */
-      
+        printf("Here\n");
+        
         for (int i = 0; i < strlen(buffer); ++i){
-                if (buffer[i] != ' '){
-                        formatBuffer[fBufCounter] = buffer[i];
-                        ++fBufCounter;
-                }
-        }
+            if (buffer[i] >= 'a' && buffer[i] <= 'z'){
+                    printf("%c\n", buffer[i]);
+                    formatBuffer[fBufCounter] = buffer[i];
+                    ++fBufCounter;
+                    }
+            }
+        
 
         free(buffer);
         fclose(fp);
@@ -114,19 +109,31 @@ format(char* fileName)
 int
 processFile(char* fileName, char* option, char* key)
 {
+        printf("Processing file\n");
+        printf("%s\n", fileName);
+        printf("Option: %s\n", option);
+        
         FILE *newFile;
-        newFile = fopen(strcat(option, fileName), "w");
+        newFile = fopen("testfile.txt", "w");
+        
         if (newFile == NULL){
                 printf("Error: Could not open file\n");
                 return -1;
+        } else {
+                printf("File created successfully\n");
         }
         char* formatBuffer = format(fileName);
+        printf("%i\n", strcmp("encode", option));
 
+        
         if (strcmp("encode", option) == 0){
+                printf("Encoding\n");
                 fputs(encode(formatBuffer, key), newFile);
         } else if (strcmp("decode", option) == 0) {
+                printf("Decoding\n");
                 fputs(decode(formatBuffer, key), newFile);
         }
+
         
         free(formatBuffer);
         fclose(newFile);
