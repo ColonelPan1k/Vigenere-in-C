@@ -27,4 +27,4 @@ but I've never really worked with much of any useful file I/O so it's another fu
 
 If there's anything you'd like to add, or changes you'd like to suggest, let me know.  I'm always open to comments and criticism. 
 
-If you'd like to read more, I will be posting an article about this on my blog: [Comming soon]
+If you'd like to read more, I will be posting an article about this on my blog: [Click here](https://zhaba.dev/2020/12/23/Vigenere_CLI-Blog.html)
