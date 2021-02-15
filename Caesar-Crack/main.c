@@ -97,7 +97,6 @@ crack(char* string){
 
         for (int i = 0; i < 26; ++i){
                 shiftTable[i] = chiSqr(characterFrequency(decrypt(string, i)));
-                printf("%f\n", shiftTable[i]);
         }
 
         return findMin(shiftTable, 26);
@@ -113,9 +112,12 @@ printArray(float* array, int len){
 
 int main(int argc, char** argv){
 
-        char* fileBuffer = loadFile("Anna_Karenina.txt");
-        char* enc = encrypt("this is a test", 5);
-        printf("%s\n", enc);
+        char* fileBuffer = loadFile("test_letter.txt");
+        char* enc = encrypt(fileBuffer, 7);
+        printf("The shift used was : %i\n", crack(enc));
+        printf("%s\n", decrypt(enc, crack(enc)));
+
+
 
 
 
