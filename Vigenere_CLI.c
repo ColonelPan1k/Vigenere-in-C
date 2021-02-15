@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>   as3 as
 
 int
 wrapMod(int a, int b)
@@ -52,7 +53,33 @@ decode(char* message, char* key)
         for (int i = 0; i < msgLen; ++i){
                 message[i] = caesarDecode(message[i], (int)(key[i % keyLen]) - 97);
         }
-        
+
+
+        return message;
+}
+
+char*
+c_encode(char* message, int key){
+        int msglen = strlen(message);
+
+        for (int i = 0; i < msglen; ++i){
+                if (isalpha(message[i])){
+                        message[i] = caesarEncode(message[i], key);
+                }
+        }
+
+        return message;
+}
+
+char*
+c_decode(char* message, int key){
+        int msglen = strlen(message);
+
+        for (int i = 0; i < msglen; ++i){
+                if (isalpha(message[i])){
+                        message[i] = caesarDecode(message[i], key);
+                }
+        }
 
         return message;
 }
@@ -79,36 +106,36 @@ format(char* fileName)
                 printf("Error: Could not allocate buffer memory\n");
                 return 0;
         }
-        
-        fread(buffer, sizeof(char), buffSize, fp);
-        
 
-        
+        fread(buffer, sizeof(char), buffSize, fp);
+
+
+
         char* formatBuffer = calloc(buffSize + 1, sizeof(char));
         int fBufCounter = 0;
 
-        
+
         for (int i = 0; i < strlen(buffer); ++i){
             if (buffer[i] >= 'a' && buffer[i] <= 'z'){
                     formatBuffer[fBufCounter] = buffer[i];
                     ++fBufCounter;
                     }
             }
-        
+
 
         free(buffer);
         fclose(fp);
-        
+
         return formatBuffer;
 }
 
 int
 processFile(char* fileName, char* option, char* key)
 {
-        
+
         FILE *newFile;
         newFile = fopen("Vigenere_Output.txt", "w");
-        
+
         if (newFile == NULL){
                 printf("Error: Could not open file\n");
                 return -1;
@@ -116,7 +143,7 @@ processFile(char* fileName, char* option, char* key)
                 printf("File created successfully\n");
         }
         char* formatBuffer = format(fileName);
-        
+
         if (strcmp("encode", option) == 0){
                 printf("Encoding\n");
                 fputs(encode(formatBuffer, key), newFile);
@@ -125,41 +152,41 @@ processFile(char* fileName, char* option, char* key)
                 fputs(decode(formatBuffer, key), newFile);
         }
 
-        
+
         free(formatBuffer);
         fclose(newFile);
-        
+
         return 0;
 }
 
 int
 main(int argc, char** argv){
-<<<<<<< HEAD
-
-=======
-        
         // Input format: Vigenere [-e/-d] "Message" key
-        
+
         // Encode
->>>>>>> 92a1f411bf778ee3f28ceeff6ed4a3f9a6f2f85e
         if (strcmp("-e", argv[1]) == 0){
                 printf("Encoded: %s\n", encode(argv[2], argv[3]));
 
         }
-<<<<<<< HEAD
-=======
+
         // Decode
->>>>>>> 92a1f411bf778ee3f28ceeff6ed4a3f9a6f2f85e
         else if (strcmp("-d", argv[1]) == 0){
                 printf("Decoded: %s\n", decode(argv[2], argv[3]));
         }
-        
+
         // Vigenere -f file.txt [encode/decode] key
         else if ( strcmp("-f", argv[1]) == 0){
                 processFile(argv[2], argv[3], argv[4]);
-                
+
         }
-        
+
+        // Caesar encode/decode:
+        else if (strcmp("-ce", argv[1]) == 0){
+                printf("%s\n", c_encode(argv[2], atoi(argv[3])));
+        }
+        else if (strcmp("-cd", argv[1]) == 0){
+                printf("%s\n", c_decode(argv[2], atoi(argv[3])));
+        }
+
         return 0;
 }
-

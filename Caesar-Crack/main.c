@@ -22,14 +22,7 @@ Highest freqnecy character EIAS
 // Frequency table of all the letters in the alphabet.  Data comes from google books
 const float FREQ_TABLE[26] = {8.04, 1.48, 3.34, 3.82, 12.49, 2.40, 1.87, 5.05, 7.57, 0.16, 0.54, 4.07, 2.51,
                           7.23, 7.64, 2.14, 0.12, 6.28, 6.51, 9.28, 2.73, 1.05, 1.68, 0.23, 1.66, 0.09};
-int
-wrapMod(int a, int b){
-        if (a >= 0){
-                return (a % b);
-        } else {
-                return (a % b + b) % b;
-        }
-}
+
 
 int
 findMin(float* array, int len){
@@ -104,6 +97,7 @@ crack(char* string){
 
         for (int i = 0; i < 26; ++i){
                 shiftTable[i] = chiSqr(characterFrequency(decrypt(string, i)));
+                printf("%f\n", shiftTable[i]);
         }
 
         return findMin(shiftTable, 26);
@@ -120,10 +114,12 @@ printArray(float* array, int len){
 int main(int argc, char** argv){
 
         char* fileBuffer = loadFile("Anna_Karenina.txt");
-        char* encryptString = encrypt(fileBuffer, 4);
-        /* this should work now, I just need to put in the stupid
-         * encrypt and decrypt functions
-         */
+        char* enc = encrypt("this is a test", 5);
+        printf("%s\n", enc);
+
+
+
+
 
 
 }
