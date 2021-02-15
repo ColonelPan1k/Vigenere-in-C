@@ -9,7 +9,7 @@
 #include <string.h>
 #include <ctype.h>
 
-static void
+void
 strclean(char* src){
         char* dst = src;
 

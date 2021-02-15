@@ -1,17 +1,5 @@
 /*  Caesar-Crack  */
 
-/*  The main cracking program
- *  All resources used will be linked in the readme
- */
-
-/*
-Highest freqnecy character EIAS
-1. Run the string through a function that returns an array of len 0-25
-   where each entry is a letter of the alphabet.
-   => for all chars in string, ++alphabet[char - 'a']
-2. Take the highest frequency characters
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -41,13 +29,13 @@ characterFrequency(char* string){
         float* charFreq = (float*)calloc(1, sizeof(float) * 26);
         int len = strlen(string);
 
+        strclean(string);
+
         // First get the amount of a given character in the
         // string
         for (int i = 0; i < strlen(string); ++i){
                 if (isalpha(string[i])){
                         ++charFreq[tolower(string[i]) - 'a'];
-                } else {
-                        continue;
                 }
         }
 
@@ -94,12 +82,15 @@ loadFile(char* filePath){
 int
 crack(char* string){
         float shiftTable[26];
+        strclean(string);
 
         for (int i = 0; i < 26; ++i){
                 shiftTable[i] = chiSqr(characterFrequency(decrypt(string, i)));
         }
 
-        return findMin(shiftTable, 26);
+        int shiftMin = findMin(shiftTable, 26);
+
+        return shiftMin;
 }
 
 static void
