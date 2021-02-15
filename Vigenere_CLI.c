@@ -1,7 +1,5 @@
 /* Vigenere Cipher CLI Tool
- * 
  * zhaba.dev
- *  
  */
 
 #include <stdio.h>
@@ -136,12 +134,12 @@ processFile(char* fileName, char* option, char* key)
 
 int
 main(int argc, char** argv){
-        
-        if (strcmp("encode", argv[1]) == 0){
+
+        if (strcmp("-e", argv[1]) == 0){
                 printf("Encoded: %s\n", encode(argv[2], argv[3]));
 
         }
-        else if (strcmp("decode", argv[1]) == 0){
+        else if (strcmp("-d", argv[1]) == 0){
                 printf("Decoded: %s\n", decode(argv[2], argv[3]));
         }
         //0 Vigenere 1 -f 2 test.txt 3 encode 4 key
@@ -149,6 +147,7 @@ main(int argc, char** argv){
                 processFile(argv[2], argv[3], argv[4]);
                 
         }
+        
         return 0;
 }
 
