@@ -38,7 +38,7 @@ encrypt(char* message, int shift){
         for (int i = 0; i < strlen(message); ++i){
                 newString[i] = ((message[i] + shift - 'a') % 26) + 97;
         }
-        strclean(newString);
+
         return newString;
 }
 
@@ -52,6 +52,6 @@ decrypt(char* message, int shift){
 
                 newString[i] = wrapMod((message[i] - shift - 97), 26) + 97;
         }
-        strclean(newString);
+
         return newString;
 }
