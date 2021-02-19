@@ -6,58 +6,7 @@
 #include <ctype.h>
 #include <math.h>
 #include "Caesar-Cipher.h"
-
-// Frequency table of all the letters in the alphabet.  Data comes from google books
-const float FREQ_TABLE[26] = {8.04, 1.48, 3.34, 3.82, 12.49, 2.40, 1.87, 5.05, 7.57, 0.16, 0.54, 4.07, 2.51,
-                          7.23, 7.64, 2.14, 0.12, 6.28, 6.51, 9.28, 2.73, 1.05, 1.68, 0.23, 1.66, 0.09};
-
-
-int
-findMin(float* array, int len){
-        int minIndex = 0;
-        for (int i = 0; i < len; ++i){
-                if (array[i] < array[minIndex]){
-                        minIndex = i;
-                }
-        }
-        return minIndex;
-}
-
-static float*
-characterFrequency(char* string){
-
-        float* charFreq = (float*)calloc(1, sizeof(float) * 26);
-        int len = strlen(string);
-
-        strclean(string);
-
-        // First get the amount of a given character in the
-        // string
-        for (int i = 0; i < strlen(string); ++i){
-                if (isalpha(string[i])){
-                        ++charFreq[tolower(string[i]) - 'a'];
-                }
-        }
-
-        // then calculate the frequenct percentage of that letter
-        // relative to the length of the string
-        for (int i = 0; i < 26; ++i){
-                charFreq[i] = (charFreq[i] / len) * 100;
-        }
-
-        return charFreq;
-}
-
-static float
-chiSqr(float* os){
-        float totalSum;
-
-        for (int i = 0; i < 26; ++i){
-                totalSum = totalSum + (pow(os[i] - FREQ_TABLE[i], 2.0) / FREQ_TABLE[i]);
-        }
-
-        return totalSum;
-}
+#include "Crack-Lib.h"
 
 static char*
 loadFile(char* filePath){
@@ -93,26 +42,8 @@ crack(char* string){
         return shiftMin;
 }
 
-static void
-printArray(float* array, int len){
-        for (int i = 0; i < len; ++i){
-                printf("%f ", array[i]);
-        }
-        putchar('\n');
-}
-
 int main(int argc, char** argv){
 
-        char* fileBuffer = loadFile("test_letter.txt");
-        char* enc = encrypt(fileBuffer, 7);
-        printf("The shift used was : %i\n", crack(enc));
-        printf("%s\n", decrypt(enc, crack(enc)));
-
-
-
-
-
-
-
+        char* fileBuffer = loadFile("Crack_me.txt");
 
 }
